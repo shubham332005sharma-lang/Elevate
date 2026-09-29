@@ -1,0 +1,451 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Elevator Management System</title>
+
+    <link
+      rel="stylesheet"
+      href="style.css"
+    />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- ================= SIDEBAR ================= -->
+
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">⇅</div>
+
+          <div>
+            <div class="brand-title">ELEVATOR</div>
+            <div class="brand-subtitle">CONTROL SYSTEM</div>
+          </div>
+        </div>
+
+        <nav class="navigation">
+          <div class="nav-section">MONITORING</div>
+
+          <a href="#" class="nav-item active">
+            <span class="nav-icon">▦</span>
+            Dashboard
+          </a>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">⇅</span>
+            Elevators
+          </a>
+
+          <a href="incidents.html" class="nav-item">
+            <span class="nav-icon">⚠</span>
+            Incidents
+            <span class="nav-badge">3</span>
+          </a>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">✕</span>
+            Failures
+          </a>
+
+          <div class="nav-section">OPERATIONS</div>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">🔧</span>
+            Maintenance
+          </a>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">▤</span>
+            Reports
+          </a>
+
+          <div class="nav-section">SYSTEM</div>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">♙</span>
+            Users
+          </a>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">⚙</span>
+            Settings
+          </a>
+        </nav>
+
+        <div class="system-status">
+          <span class="status-dot"></span>
+
+          <div>
+            <strong>System Online</strong>
+            <small>All services operational</small>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ================= MAIN ================= -->
+
+      <main class="main">
+        <!-- HEADER -->
+
+        <header class="header">
+          <div>
+            <div class="breadcrumb">ELEVATOR SYSTEM / OVERVIEW</div>
+
+            <h1>System Dashboard</h1>
+
+            <p>Real-time elevator monitoring and incident management</p>
+          </div>
+
+          <div class="header-right">
+            <div class="system-time">
+              <span class="live-dot"></span>
+              LIVE
+            </div>
+
+            <div class="user">
+              <div class="avatar">A</div>
+
+              <div>
+                <strong>Administrator</strong>
+                <small>System Admin</small>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- ================= STATISTICS ================= -->
+
+        <section class="stats">
+          <div class="stat-card">
+            <div class="stat-icon elevator-icon">⇅</div>
+
+            <div>
+              <span class="stat-label"> TOTAL ELEVATORS </span>
+
+              <strong class="stat-value"> 12 </strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon normal-icon">✓</div>
+
+            <div>
+              <span class="stat-label"> OPERATIONAL </span>
+
+              <strong class="stat-value green"> 9 </strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon warning-icon">!</div>
+
+            <div>
+              <span class="stat-label"> WARNINGS </span>
+
+              <strong class="stat-value yellow"> 2 </strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon failure-icon">✕</div>
+
+            <div>
+              <span class="stat-label"> ACTIVE FAILURES </span>
+
+              <strong class="stat-value red"> 1 </strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ELEVATOR MONITOR ================= -->
+
+        <section class="panel elevator-panel">
+          <div class="panel-header">
+            <div>
+              <span class="panel-label"> LIVE MONITOR </span>
+
+              <h2>Elevator Status</h2>
+            </div>
+
+            <button class="view-button">VIEW ALL ELEVATORS →</button>
+          </div>
+
+          <div class="elevator-grid">
+            <!-- ELEVATOR 01 -->
+
+            <div class="elevator-card">
+              <div class="elevator-card-header">
+                <strong>E-01</strong>
+
+                <span class="status normal"> ● NORMAL </span>
+              </div>
+
+              <div class="lift-display">
+                <div class="floor-number">05</div>
+
+                <div class="direction">↑</div>
+              </div>
+
+              <div class="lift-info">
+                <div>
+                  <span>POSITION</span>
+                  <strong>Floor 5</strong>
+                </div>
+
+                <div>
+                  <span>DIRECTION</span>
+                  <strong>UP</strong>
+                </div>
+
+                <div>
+                  <span>DOOR</span>
+                  <strong>CLOSED</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- ELEVATOR 02 -->
+
+            <div class="elevator-card">
+              <div class="elevator-card-header">
+                <strong>E-02</strong>
+
+                <span class="status normal"> ● NORMAL </span>
+              </div>
+
+              <div class="lift-display">
+                <div class="floor-number">00</div>
+
+                <div class="direction">—</div>
+              </div>
+
+              <div class="lift-info">
+                <div>
+                  <span>POSITION</span>
+                  <strong>Ground</strong>
+                </div>
+
+                <div>
+                  <span>DIRECTION</span>
+                  <strong>IDLE</strong>
+                </div>
+
+                <div>
+                  <span>DOOR</span>
+                  <strong>OPEN</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- ELEVATOR 03 -->
+
+            <div class="elevator-card warning-card">
+              <div class="elevator-card-header">
+                <strong>E-03</strong>
+
+                <span class="status warning"> ● WARNING </span>
+              </div>
+
+              <div class="lift-display">
+                <div class="floor-number">07</div>
+
+                <div class="direction">↓</div>
+              </div>
+
+              <div class="lift-info">
+                <div>
+                  <span>POSITION</span>
+                  <strong>Floor 7</strong>
+                </div>
+
+                <div>
+                  <span>DIRECTION</span>
+                  <strong>DOWN</strong>
+                </div>
+
+                <div>
+                  <span>MOTOR</span>
+                  <strong class="yellow">HIGH TEMP</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- ELEVATOR 04 -->
+
+            <div class="elevator-card failure-card">
+              <div class="elevator-card-header">
+                <strong>E-04</strong>
+
+                <span class="status failure"> ● FAILURE </span>
+              </div>
+
+              <div class="lift-display failure-display">
+                <div class="floor-number">00</div>
+
+                <div class="direction">✕</div>
+              </div>
+
+              <div class="lift-info">
+                <div>
+                  <span>POSITION</span>
+                  <strong>Ground</strong>
+                </div>
+
+                <div>
+                  <span>STATUS</span>
+                  <strong class="red">STOPPED</strong>
+                </div>
+
+                <div>
+                  <span>FAULT</span>
+                  <strong class="red">DOOR SENSOR</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= LOWER GRID ================= -->
+
+        <div class="content-grid">
+          <!-- INCIDENTS -->
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label"> SYSTEM EVENTS </span>
+
+                <h2>Recent Incidents</h2>
+              </div>
+
+              <button class="view-button">VIEW ALL →</button>
+            </div>
+
+            <div class="incident-list">
+              <div class="incident">
+                <div class="incident-severity critical">!</div>
+
+                <div class="incident-details">
+                  <strong> Door Sensor Failure </strong>
+
+                  <span> Elevator E-04 · Critical </span>
+
+                  <small> 21 minutes ago </small>
+                </div>
+
+                <span class="incident-status open"> OPEN </span>
+              </div>
+
+              <div class="incident">
+                <div class="incident-severity warning">!</div>
+
+                <div class="incident-details">
+                  <strong> Motor Temperature High </strong>
+
+                  <span> Elevator E-03 · High </span>
+
+                  <small> 48 minutes ago </small>
+                </div>
+
+                <span class="incident-status investigating">
+                  INVESTIGATING
+                </span>
+              </div>
+
+              <div class="incident">
+                <div class="incident-severity normal">✓</div>
+
+                <div class="incident-details">
+                  <strong> Overload Detected </strong>
+
+                  <span> Elevator E-07 · Medium </span>
+
+                  <small> 2 hours ago </small>
+                </div>
+
+                <span class="incident-status resolved"> RESOLVED </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- MAINTENANCE -->
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label"> SCHEDULE </span>
+
+                <h2>Maintenance</h2>
+              </div>
+
+              <button class="view-button">VIEW SCHEDULE →</button>
+            </div>
+
+            <div class="maintenance-list">
+              <div class="maintenance">
+                <div class="maintenance-date">
+                  <strong>08</strong>
+                  <span>SEP</span>
+                </div>
+
+                <div>
+                  <strong>Elevator E-03</strong>
+                  <span>Preventive Maintenance</span>
+                </div>
+              </div>
+
+              <div class="maintenance">
+                <div class="maintenance-date">
+                  <strong>10</strong>
+                  <span>SEP</span>
+                </div>
+
+                <div>
+                  <strong>Elevator E-07</strong>
+                  <span>Safety Inspection</span>
+                </div>
+              </div>
+
+              <div class="maintenance">
+                <div class="maintenance-date">
+                  <strong>14</strong>
+                  <span>SEP</span>
+                </div>
+
+                <div>
+                  <strong>Elevator E-11</strong>
+                  <span>Lubrication</span>
+                </div>
+              </div>
+
+              <div class="maintenance overdue">
+                <div class="maintenance-date">
+                  <strong>02</strong>
+                  <span>SEP</span>
+                </div>
+
+                <div>
+                  <strong>Elevator E-05</strong>
+                  <span>Inspection Overdue</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+          <span> Elevator Management System </span>
+
+          <span> System Status: <strong>ONLINE</strong> </span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
+```

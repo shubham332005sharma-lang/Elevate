@@ -1,0 +1,126 @@
+Project-Elevate/
+│
+├── README.md
+├── requirements.txt
+├── .gitignore
+│
+├── docs/
+│   │
+│   ├── 01_requirements/
+│   │   ├── SRS.md
+│   │   ├── functional-requirements.md
+│   │   └── non-functional-requirements.md
+│   │
+│   ├── 02_analysis/
+│   │   ├── actors.md
+│   │   ├── use-cases.md
+│   │   ├── use-case-diagram.png
+│   │   ├── dfd-level-0.png
+│   │   └── dfd-level-1.png
+│   │
+│   ├── 03_design/
+│   │   ├── system-architecture.png
+│   │   ├── database/
+│   │   │   └── er-diagram.png
+│   │   ├── uml/
+│   │   │   ├── class-diagram.png
+│   │   │   ├── sequence-diagram.png
+│   │   │   └── activity-diagram.png
+│   │   └── api.md
+│   │
+│   ├── 04_testing/
+│   │   ├── test-plan.md
+│   │   ├── test-cases.md
+│   │   └── test-report.md
+│   │
+│   ├── 05_project/
+│   │   ├── project-plan.md
+│   │   └── synopsis.pdf
+│   │
+│   └── 06_user-documentation/
+│       └── user-manual.md
+│
+├── hardware/
+│   │
+│   ├── esp32/
+│   │   ├── project_elevate.ino
+│   │   ├── config.h
+│   │   └── calibration.h
+│   │
+│   └── elevator_controller/
+│       └── elevator_controller.ino
+│
+├── backend/
+│   │
+│   ├── manage.py
+│   │
+│   ├── elevate/
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── asgi.py
+│   │   └── wsgi.py
+│   │
+│   └── incidents/
+│       │
+│       ├── __init__.py
+│       ├── admin.py
+│       ├── apps.py
+│       ├── models.py
+│       ├── views.py
+│       ├── urls.py
+│       ├── serializers.py
+│       │
+│       ├── migrations/
+│       │   └── __init__.py
+│       │
+│       ├── templates/
+│       │   └── incidents/
+│       │       │
+│       │       ├── base.html
+│       │       ├── home.html
+│       │       ├── login.html
+│       │       ├── report_issue.html
+│       │       ├── report_success.html
+│       │       │
+│       │       ├── admin/
+│       │       │   ├── dashboard.html
+│       │       │   ├── users.html
+│       │       │   ├── elevators.html
+│       │       │   ├── technicians.html
+│       │       │   ├── incidents.html
+│       │       │   └── settings.html
+│       │       │
+│       │       ├── administrator/
+│       │       │   ├── dashboard.html
+│       │       │   ├── elevators.html
+│       │       │   ├── technicians.html
+│       │       │   ├── incidents.html
+│       │       │   ├── incident_detail.html
+│       │       │   └── history.html
+│       │       │
+│       │       └── technician/
+│       │           ├── dashboard.html
+│       │           ├── incidents.html
+│       │           ├── incident_detail.html
+│       │           └── history.html
+│       │
+│       └── static/
+│           └── incidents/
+│               ├── css/
+│               │   ├── base.css
+│               │   ├── admin.css
+│               │   ├── administrator.css
+│               │   └── technician.css
+│               │
+│               ├── js/
+│               │   └── dashboard.js
+│               │
+│               └── images/
+│
+└── tests/
+    ├── test_models.py
+    ├── test_authentication.py
+    ├── test_api.py
+    ├── test_incidents.py
+    └── test_assignment.py

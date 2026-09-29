@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Incidents | Elevator Control System</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">⇅</div>
+
+            <div>
+                <div class="brand-title">ELEVATOR</div>
+                <div class="brand-subtitle">CONTROL SYSTEM</div>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <div class="nav-section">
+                MONITORING
+            </div>
+
+            <a href="/dashboard" class="nav-item">
+                <span class="nav-icon">▦</span>
+                Dashboard
+            </a>
+
+            <a href="/elevators" class="nav-item">
+                <span class="nav-icon">⇅</span>
+                Elevators
+            </a>
+
+            <a href="/incidents" class="nav-item active">
+                <span class="nav-icon">⚠</span>
+                Incidents
+                <span class="nav-badge">3</span>
+            </a>
+
+            <a href="/failures" class="nav-item">
+                <span class="nav-icon">✕</span>
+                Failures
+            </a>
+
+
+            <div class="nav-section">
+                OPERATIONS
+            </div>
+
+            <a href="/maintenance" class="nav-item">
+                <span class="nav-icon">🔧</span>
+                Maintenance
+            </a>
+
+            <a href="/reports" class="nav-item">
+                <span class="nav-icon">▤</span>
+                Reports
+            </a>
+
+
+            <div class="nav-section">
+                SYSTEM
+            </div>
+
+            <a href="/users" class="nav-item">
+                <span class="nav-icon">♙</span>
+                Users
+            </a>
+
+            <a href="/settings" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+
+        <div class="system-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+                <strong>System Online</strong>
+                <small>All services operational</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+
+                <div class="breadcrumb">
+                    ELEVATOR SYSTEM / INCIDENT MANAGEMENT
+                </div>
+
+                <h1>Incidents</h1>
+
+                <p>
+                    Monitor, investigate and manage elevator incidents
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <div class="system-time">
+                    <span class="live-dot"></span>
+                    LIVE
+                </div>
+
+
+                <button class="create-button">
+                    + REPORT INCIDENT
+                </button>
+
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>Administrator</strong>
+                        <small>System Admin</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <section class="summary">
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    OPEN INCIDENTS
+                </span>
+
+                <strong class="summary-value red">
+                    3
+                </strong>
+
+                <span class="summary-description">
+                    Require attention
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    INVESTIGATING
+                </span>
+
+                <strong class="summary-value yellow">
+                    2
+                </strong>
+
+                <span class="summary-description">
+                    Under investigation
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    RESOLVED TODAY
+                </span>
+
+                <strong class="summary-value green">
+                    7
+                </strong>
+
+                <span class="summary-description">
+                    Successfully resolved
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    TOTAL THIS MONTH
+                </span>
+
+                <strong class="summary-value">
+                    34
+                </strong>
+
+                <span class="summary-description">
+                    All incidents
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FILTERS ================= -->
+
+        <section class="filter-panel">
+
+            <div class="search-box">
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    placeholder="Search incident ID, elevator or type..."
+                >
+
+            </div>
+
+
+            <select>
+                <option>All Statuses</option>
+                <option>Open</option>
+                <option>Investigating</option>
+                <option>Resolved</option>
+                <option>Closed</option>
+            </select>
+
+
+            <select>
+                <option>All Severities</option>
+                <option>Critical</option>
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+            </select>
+
+
+            <select>
+                <option>All Elevators</option>
+                <option>E-01</option>
+                <option>E-02</option>
+                <option>E-03</option>
+                <option>E-04</option>
+            </select>
+
+
+            <button class="filter-button">
+                FILTER
+            </button>
+
+        </section>
+
+
+        <!-- ================= INCIDENT TABLE ================= -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="panel-label">
+                        INCIDENT REGISTER
+                    </span>
+
+                    <h2>Incident Records</h2>
+
+                </div>
+
+
+                <div class="record-count">
+                    Showing 1–8 of 34 incidents
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>INCIDENT</th>
+                            <th>ELEVATOR</th>
+                            <th>TYPE</th>
+                            <th>SEVERITY</th>
+                            <th>DETECTED</th>
+                            <th>STATUS</th>
+                            <th>ACTION</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <!-- INCIDENT 104 -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="incident-id">
+                                    INC-104
+                                </div>
+
+                                <div class="incident-sub">
+                                    Door sensor malfunction
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="elevator-tag">
+                                    E-04
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Door Sensor
+                            </td>
+
+
+                            <td>
+                                <span class="severity critical">
+                                    ● CRITICAL
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <div class="time">
+                                    21 min ago
+                                </div>
+
+                                <div class="date">
+                                    Sep 04, 19:12
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <span class="status open">
+                                    OPEN
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <button class="action-button">
+                                    VIEW →
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <!-- INCIDENT 103 -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="incident-id">
+                                    INC-103
+                                </div>
+
+                                <div class="incident-sub">
+                                    Motor temperature exceeded limit
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="elevator-tag">
+                                    E-03
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Motor
+                            </td>
+
+
+                            <td>
+                                <span class="severity high">
+                                    ● HIGH
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <div class="time">
+                                    48 min ago
+                                </div>
+
+                                <div class="date">
+                                    Sep 04, 18:45
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <span class="status investigating">
+                                    INVESTIGATING
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <button class="action-button">
+                                    VIEW →
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <!-- INCIDENT 102 -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="incident-id">
+                                    INC-102
+                                </div>
+
+                                <div class="incident-sub">
+                                    Passenger overload detected
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="elevator-tag">
+                                    E-07
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Overload
+                            </td>
+
+
+                            <td>
+                                <span class="severity medium">
+                                    ● MEDIUM
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <div class="time">
+                                    2 hrs ago
+                                </div>
+
+                                <div class="date">
+                                    Sep 04, 17:31
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <span class="status resolved">
+                                    RESOLVED
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <button class="action-button">
+                                    VIEW →
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <!-- INCIDENT 101 -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="incident-id">
+                                    INC-101
+                                </div>
+
+                                <div class="incident-sub">
+                                    Abnormal vibration detected
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="elevator-tag">
+                                    E-02
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Vibration
+                            </td>
+
+
+                            <td>
+                                <span class="severity high">
+                                    ● HIGH
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <div class="time">
+                                    3 hrs ago
+                                </div>
+
+                                <div class="date">
+                                    Sep 04, 16:20
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <span class="status investigating">
+                                    INVESTIGATING
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <button class="action-button">
+                                    VIEW →
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <!-- INCIDENT 100 -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="incident-id">
+                                    INC-100
+                                </div>
+
+                                <div class="incident-sub">
+                                    Emergency stop activated
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="elevator-tag">
+                                    E-09
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Emergency Stop
+                            </td>
+
+
+                            <td>
+                                <span class="severity critical">
+                                    ● CRITICAL
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <div class="time">
+                                    5 hrs ago
+                                </div>
+
+                                <div class="date">
+                                    Sep 04, 14:52
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <span class="status resolved">
+                                    RESOLVED
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <button class="action-button">
+                                    VIEW →
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                        <!-- INCIDENT 099 -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="incident-id">
+                                    INC-099
+                                </div>
+
+                                <div class="incident-sub">
+                                    Door closing delay
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="elevator-tag">
+                                    E-06
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Door
+                            </td>
+
+
+                            <td>
+                                <span class="severity low">
+                                    ● LOW
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <div class="time">
+                                    6 hrs ago
+                                </div>
+
+                                <div class="date">
+                                    Sep 04, 13:48
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <span class="status closed">
+                                    CLOSED
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <button class="action-button">
+                                    VIEW →
+                                </button>
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- PAGINATION -->
+
+            <div class="pagination">
+
+                <span>
+                    Page 1 of 5
+                </span>
+
+                <div class="pagination-buttons">
+
+                    <button disabled>
+                        ←
+                    </button>
+
+                    <button class="current">
+                        1
+                    </button>
+
+                    <button>
+                        2
+                    </button>
+
+                    <button>
+                        3
+                    </button>
+
+                    <button>
+                        4
+                    </button>
+
+                    <button>
+                        5
+                    </button>
+
+                    <button>
+                        →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= INCIDENT LIFECYCLE ================= -->
+
+        <section class="lifecycle-panel">
+
+            <div>
+
+                <span class="panel-label">
+                    INCIDENT WORKFLOW
+                </span>
+
+                <h2>Incident Lifecycle</h2>
+
+            </div>
+
+
+            <div class="lifecycle">
+
+                <div class="lifecycle-step active">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <div>
+                        <strong>Detected</strong>
+                        <span>System detects abnormal condition</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lifecycle-line"></div>
+
+
+                <div class="lifecycle-step active">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <div>
+                        <strong>Registered</strong>
+                        <span>Incident is recorded in system</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lifecycle-line"></div>
+
+
+                <div class="lifecycle-step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <div>
+                        <strong>Investigated</strong>
+                        <span>Operator investigates the incident</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lifecycle-line"></div>
+
+
+                <div class="lifecycle-step">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <div>
+                        <strong>Resolved</strong>
+                        <span>Incident is resolved or converted to failure</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <span>
+                Elevator Management System
+            </span>
+
+            <span>
+                System Status:
+                <strong>ONLINE</strong>
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>
+
