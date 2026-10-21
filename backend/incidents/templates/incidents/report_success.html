@@ -1,0 +1,3 @@
+{% extends "incidents/base.html" %}
+{% block title %}Report submitted | Elevate{% endblock %}
+{% block content %}<section class="card"><h1>Report received</h1><p>Your issue for elevator {{ incident.elevator.code }} has been recorded.</p><p>Reference: #{{ incident.pk }}</p><a href="{% url 'home' %}">Return home</a></section>{% endblock %}
