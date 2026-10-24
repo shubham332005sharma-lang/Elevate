@@ -15,7 +15,7 @@
   </style>
 </head>
 <body>
-  <header><strong><a href="{% url 'home' %}">ELEVATE</a></strong><nav><a href="{% url 'report-incident' %}">Report an issue</a>{% if user.is_authenticated %}<a href="{% url 'incident-list' %}">Staff incidents</a><form method="post" action="{% url 'logout' %}" style="display:inline">{% csrf_token %}<button type="submit" style="margin:0">Log out</button></form>{% else %}<a href="{% url 'login' %}">Staff login</a>{% endif %}</nav></header>
+  <header><strong><a href="{% url 'home' %}">ELEVATE</a></strong><nav><a href="{% url 'report-incident' %}">Report an issue</a>{% if user.is_authenticated %}<a href="{% url 'dashboard' %}">Dashboard</a><a href="{% url 'incident-list' %}">Incidents</a><form method="post" action="{% url 'logout' %}" style="display:inline">{% csrf_token %}<button type="submit" style="margin:0">Log out</button></form>{% else %}<a href="{% url 'login' %}">Staff login</a>{% endif %}</nav></header>
   <main>{% if messages %}{% for message in messages %}<p class="messages">{{ message }}</p>{% endfor %}{% endif %}{% block content %}{% endblock %}</main>
 </body>
 </html>

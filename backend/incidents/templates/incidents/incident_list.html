@@ -1,3 +1,0 @@
-{% extends "incidents/base.html" %}
-{% block title %}Incidents | Elevate{% endblock %}
-{% block content %}<h1>Incidents</h1><section class="card">{% if incidents %}<table><thead><tr><th>Issue</th><th>Elevator</th><th>Severity</th><th>Status</th><th>Reported</th><th></th></tr></thead><tbody>{% for incident in incidents %}<tr><td>{{ incident.title }}</td><td>{{ incident.elevator.code }}</td><td>{{ incident.get_severity_display }}</td><td>{{ incident.get_status_display }}</td><td>{{ incident.created_at|date:"M j, Y H:i" }}</td><td><a href="{% url 'incident-detail' incident.pk %}">Open</a></td></tr>{% endfor %}</tbody></table>{% else %}<p>No incidents have been reported.</p>{% endif %}</section>{% endblock %}

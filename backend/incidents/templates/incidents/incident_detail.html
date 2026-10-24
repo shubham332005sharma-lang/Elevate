@@ -1,3 +1,0 @@
-{% extends "incidents/base.html" %}
-{% block title %}Incident #{{ incident.pk }} | Elevate{% endblock %}
-{% block content %}<section class="card"><p><a href="{% url 'incident-list' %}">← All incidents</a></p><h1>{{ incident.title }}</h1><p><strong>Elevator:</strong> {{ incident.elevator.code }}</p><p><strong>Severity:</strong> {{ incident.get_severity_display }}</p><p><strong>Reported by:</strong> {{ incident.reporter_name }}{% if incident.reporter_contact %} · {{ incident.reporter_contact }}{% endif %}</p><p>{{ incident.description|linebreaks }}</p><form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit">Save changes</button></form></section>{% endblock %}

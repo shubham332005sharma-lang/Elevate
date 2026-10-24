@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff login | Elevate</title>
+  <link rel="stylesheet" href="{% static 'incidents/style.css' %}">
+</head>
+<body class="elevate-auth-body">
+  <main class="login-page">
+    <div class="auth-heading"><div class="brand-icon">⇅</div><div><strong>ELEVATE</strong><span>CONTROL SYSTEM</span></div></div>
+    <section class="form auth-card">
+      <h1>Staff login</h1>
+      <p class="auth-intro">Sign in to review and manage elevator incidents.</p>
+      {% if form.errors %}<p class="auth-error">The username or password was not accepted. Please try again.</p>{% endif %}
+      <form method="post">
+        {% csrf_token %}
+        <label for="{{ form.username.id_for_label }}">Username</label>
+        {{ form.username }}
+        <label for="{{ form.password.id_for_label }}">Password</label>
+        {{ form.password }}
+        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        <button type="submit">LOG IN</button>
+      </form>
+      <a class="auth-report-link" href="{% url 'report-incident' %}">REPORT AN ISSUE</a>
+    </section>
+  </main>
+</body>
+</html>

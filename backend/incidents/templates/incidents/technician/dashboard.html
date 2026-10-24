@@ -1,0 +1,40 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My assigned tasks | Elevate</title>
+  <link rel="stylesheet" href="{% static 'incidents/style.css' %}">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon">⇅</div><div><div class="brand-title">ELEVATOR</div><div class="brand-subtitle">TECHNICIAN PORTAL</div></div></div>
+      <nav class="navigation">
+        <div class="nav-section">MY WORK</div>
+        <a href="{% url 'dashboard' %}" class="nav-item active"><span class="nav-icon">▦</span>Assigned tasks <span class="nav-badge">{{ active_task_count }}</span></a>
+      </nav>
+      <div class="system-status"><span class="status-dot"></span><div><strong>System Online</strong><small>Your assigned work only</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="header">
+        <div><div class="breadcrumb">TECHNICIAN / MY WORK</div><h1>Assigned tasks</h1><p>Incidents assigned to you, with the information needed to complete them.</p></div>
+        <div class="header-right"><div class="user"><div class="avatar">{{ request.user.username|first|upper }}</div><div><strong>{{ request.user.get_full_name|default:request.user.username }}</strong><small>Technician</small></div></div><a class="action-button" href="{% url 'password-change' %}">CHANGE PASSWORD</a><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="action-button" type="submit">LOG OUT</button></form></div>
+      </header>
+      <section class="panel">
+        <div class="panel-header"><div><span class="panel-label">WORK QUEUE</span><h2>My assigned incidents</h2></div><div class="record-count">{{ tasks|length }} task{{ tasks|length|pluralize }}</div></div>
+        <div class="table-wrapper"><table>
+          <thead><tr><th>TASK</th><th>ELEVATOR</th><th>LOCATION</th><th>SEVERITY</th><th>STATUS</th><th>REPORTED</th><th></th></tr></thead>
+          <tbody>
+            {% for task in tasks %}
+            <tr><td>{{ task.title }}</td><td>{{ task.elevator.code }}{% if task.elevator.building %}<br>{{ task.elevator.building }}{% endif %}</td><td>{{ task.elevator.location|default:"—" }}</td><td>{{ task.get_severity_display }}</td><td>{{ task.get_status_display }}</td><td>{{ task.created_at|date:"M j, Y H:i" }}</td><td><a class="action-button" href="{% url 'incident-detail' task.pk %}">VIEW TASK</a></td></tr>
+            {% empty %}<tr><td colspan="7">No tasks are currently assigned to you. Ask an administrator to assign an incident.</td></tr>{% endfor %}
+          </tbody>
+        </table></div>
+      </section>
+      <footer><span>Elevator Management System</span><span>Only incidents assigned to your account are shown.</span></footer>
+    </main>
+  </div>
+</body>
+</html>

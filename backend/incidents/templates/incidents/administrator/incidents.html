@@ -1,0 +1,407 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Incidents | Elevate</title>
+
+    <link rel="stylesheet"
+          href="{% static 'incidents/style.css' %}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">⇅</div>
+
+            <div>
+                <div class="brand-title">ELEVATOR</div>
+                <div class="brand-subtitle">CONTROL SYSTEM</div>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <div class="nav-section">
+                MONITORING
+            </div>
+
+            <a href="{% url 'dashboard' %}" class="nav-item">
+                <span class="nav-icon">▦</span>
+                Dashboard
+            </a>
+
+            <a href="{% url 'elevator-list' %}" class="nav-item">
+                <span class="nav-icon">⇅</span>
+                Elevators
+            </a>
+
+            <a href="{% url 'incident-list' %}" class="nav-item active">
+                <span class="nav-icon">⚠</span>
+                Incidents
+                <span class="nav-badge">{{ active_count }}</span>
+            </a>
+
+            <a href="{% url 'report-incident' %}" class="nav-item">
+                <span class="nav-icon">＋</span>
+                Report an issue
+            </a>
+
+
+            <div class="nav-section">OPERATIONS</div>
+            <a href="{% url 'report-incident' %}" class="nav-item"><span class="nav-icon">＋</span>Report an issue</a>
+            {% if request.user.is_staff or request.user.is_superuser %}<div class="nav-section">ADMINISTRATION</div>
+            <a href="{% url 'admin:auth_user_changelist' %}" class="nav-item">
+                <span class="nav-icon">♙</span>
+                Users
+            </a>
+
+            <a href="{% url 'admin:index' %}" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                Admin site
+            </a>
+            {% endif %}
+
+        </nav>
+
+
+        <div class="system-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+                <strong>System Online</strong>
+                <small>All services operational</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+
+                <div class="breadcrumb">
+                    ELEVATOR SYSTEM / INCIDENT MANAGEMENT
+                </div>
+
+                <h1>Incidents</h1>
+
+                <p>
+                    Monitor, investigate and manage elevator incidents
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <div class="system-time">
+                    <span class="live-dot"></span>
+                    LIVE
+                </div>
+
+
+                <a class="create-button" href="{% url 'report-incident' %}">
+                    + REPORT INCIDENT
+                </a>
+
+
+                <div class="user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>
+                        <small>{% if request.user.is_superuser %}Administrator{% elif request.user.is_staff %}Staff{% else %}Technician{% endif %}</small>
+                    </div>
+
+                </div>
+                <a class="action-button" href="{% url 'password-change' %}">CHANGE PASSWORD</a>
+                <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="action-button" type="submit">LOG OUT</button></form>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <section class="summary">
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    OPEN INCIDENTS
+                </span>
+
+                <strong class="summary-value red">
+                    {{ open_count }}
+                </strong>
+
+                <span class="summary-description">
+                    Require attention
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    INVESTIGATING
+                </span>
+
+                <strong class="summary-value yellow">
+                    {{ investigating_count }}
+                </strong>
+
+                <span class="summary-description">
+                    Under investigation
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    RESOLVED
+                </span>
+
+                <strong class="summary-value green">
+                    {{ resolved_count }}
+                </strong>
+
+                <span class="summary-description">
+                    Resolved incidents
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    TOTAL INCIDENTS
+                </span>
+
+                <strong class="summary-value">
+                    {{ total_count }}
+                </strong>
+
+                <span class="summary-description">
+                    All incidents
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FILTERS ================= -->
+
+        <form class="filter-panel" method="get" action="{% url 'incident-list' %}">
+            <div class="search-box"><span>⌕</span><input type="search" name="q" value="{{ search }}" placeholder="Search incident, elevator or type..."></div>
+            <select name="status"><option value="">All Statuses</option>{% for value,label in status_choices %}<option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+            <select name="severity"><option value="">All Severities</option>{% for value,label in severity_choices %}<option value="{{ value }}" {% if selected_severity == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+            <select name="elevator"><option value="">All Elevators</option>{% for elevator in elevators %}<option value="{{ elevator.pk }}" {% if selected_elevator == elevator.pk|stringformat:'s' %}selected{% endif %}>{{ elevator.code }}</option>{% endfor %}</select>
+            <button class="filter-button" type="submit">FILTER</button>
+        </form>
+
+
+        <!-- ================= INCIDENT TABLE ================= -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="panel-label">
+                        INCIDENT REGISTER
+                    </span>
+
+                    <h2>Incident Records</h2>
+
+                </div>
+
+
+                <div class="record-count">{{ incidents|length }} shown · {{ total_count }} total</div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>INCIDENT</th>
+                            <th>ELEVATOR</th>
+                            <th>TYPE</th>
+                            <th>SEVERITY</th>
+                            <th>DETECTED</th>
+                            <th>STATUS</th>
+                            <th>ACTION</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+                    {% for incident in incidents %}
+                    <tr>
+                        <td><div class="incident-id">INC-{{ incident.pk|stringformat:"04d" }}</div><div class="incident-sub">{{ incident.title }}</div></td>
+                        <td><span class="elevator-tag">{{ incident.elevator.code }}</span></td>
+                        <td>{{ incident.category|default:incident.title }}</td>
+                        <td><span class="severity {{ incident.severity }}">● {{ incident.get_severity_display|upper }}</span></td>
+                        <td><div class="time">{{ incident.created_at|date:"H:i" }}</div><div class="date">{{ incident.created_at|date:"M j, Y" }}</div></td>
+                        <td><span class="status {{ incident.status }}">{{ incident.get_status_display|upper }}</span></td>
+                        <td><a class="action-button" href="{% url 'incident-detail' incident.pk %}">OPEN</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7">No incidents match these filters.</td></tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div></section>
+
+
+        <!-- ================= INCIDENT LIFECYCLE ================= -->
+
+        <section class="lifecycle-panel">
+
+            <div>
+
+                <span class="panel-label">
+                    INCIDENT WORKFLOW
+                </span>
+
+                <h2>Incident Lifecycle</h2>
+
+            </div>
+
+
+            <div class="lifecycle">
+
+                <div class="lifecycle-step active">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <div>
+                        <strong>Detected</strong>
+                        <span>System detects abnormal condition</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lifecycle-line"></div>
+
+
+                <div class="lifecycle-step active">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <div>
+                        <strong>Registered</strong>
+                        <span>Incident is recorded in system</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lifecycle-line"></div>
+
+
+                <div class="lifecycle-step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <div>
+                        <strong>Investigated</strong>
+                        <span>Operator investigates the incident</span>
+                    </div>
+
+                </div>
+
+
+                <div class="lifecycle-line"></div>
+
+
+                <div class="lifecycle-step">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <div>
+                        <strong>Resolved</strong>
+                        <span>Incident is resolved or converted to failure</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <span>
+                Elevator Management System
+            </span>
+
+            <span>
+                System Status:
+                <strong>ONLINE</strong>
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>
+

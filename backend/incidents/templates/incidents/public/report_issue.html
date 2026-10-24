@@ -1,0 +1,55 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Report an issue | Elevate</title>
+  <link rel="stylesheet" href="{% static 'incidents/style.css' %}">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon">⇅</div><div><div class="brand-title">ELEVATOR</div><div class="brand-subtitle">CONTROL SYSTEM</div></div></div>
+      <nav class="navigation">
+        <div class="nav-section">PUBLIC SERVICES</div>
+        <a href="{% url 'report-incident' %}" class="nav-item active"><span class="nav-icon">＋</span>Report an issue</a>
+        {% if request.user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="nav-item"><span class="nav-icon">▦</span>Dashboard</a>
+          <a href="{% url 'incident-list' %}" class="nav-item"><span class="nav-icon">⚠</span>Incident register</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="nav-item"><span class="nav-icon">♙</span>Staff login</a>
+        {% endif %}
+      </nav>
+      <div class="system-status"><span class="status-dot"></span><div><strong>Reporting available</strong><small>Submissions go to building staff</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="header">
+        <div><div class="breadcrumb">ELEVATE / PUBLIC REPORTING</div><h1>Report an elevator issue</h1><p>Tell the building team what happened so they can investigate.</p></div>
+        <div class="header-right"><span class="system-time"><span class="live-dot"></span>PUBLIC FORM</span></div>
+      </header>
+      <section class="panel report-panel">
+        <div class="panel-header"><div><span class="panel-label">INCIDENT REPORT</span><h2>Issue details</h2></div><span class="record-count">Fields marked * are required</span></div>
+        {% if elevator_count %}
+        <form method="post" class="report-form">
+          {% csrf_token %}
+          {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+          {% for field in form %}
+          <div class="report-field{% if field.errors %} field-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span> *</span>{% endif %}</label>
+            {{ field }}
+            {% if field.help_text %}<small class="field-help">{{ field.help_text }}</small>{% endif %}
+            {% for error in field.errors %}<small class="field-message">{{ error }}</small>{% endfor %}
+          </div>
+          {% endfor %}
+          <div class="report-actions"><button class="create-button" type="submit">SUBMIT REPORT</button><a class="action-button" href="{% url 'login' %}">STAFF LOGIN</a></div>
+        </form>
+        {% else %}
+        <div class="report-form"><p>No elevators have been added yet, so reports cannot be associated with equipment.</p><p>Please ask an administrator to add an elevator, then return to this page.</p><a class="action-button" href="{% url 'login' %}">STAFF LOGIN</a></div>
+        {% endif %}
+      </section>
+      <footer><span>Elevator Management System</span><span>Reporters do not need a staff account</span></footer>
+    </main>
+  </div>
+</body>
+</html>

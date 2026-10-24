@@ -2037,3 +2037,73 @@ footer strong {
     }
 }
 
+
+/* Django-connected page refinements */
+a.view-button { display: inline-block; text-decoration: none; }
+a.incident { color: inherit; text-decoration: none; }
+a.maintenance { color: inherit; text-decoration: none; }
+.empty-state { padding: 20px; color: #8994a1; }
+.incident-details-panel { padding: 20px; color: #aeb7c1; line-height: 1.6; }
+.incident-details-panel p { margin: 0 0 14px; }
+.incident-details-panel strong { color: #d5dce3; }
+.incident-update-form { padding: 20px; }
+.incident-update-form p { margin: 0 0 16px; }
+.incident-update-form label { display: block; margin-bottom: 6px; color: #aeb7c1; font-size: 12px; }
+.incident-update-form select,
+.incident-update-form input,
+.incident-update-form textarea { width: 100%; min-height: 38px; padding: 8px 10px; background: #171e26; border: 1px solid #303945; color: #e6edf3; }
+.messages { margin: 0 0 16px; padding: 12px 16px; background: #162a20; border: 1px solid #27543b; color: #4ade80; }
+
+/* Authentication page */
+.elevate-auth-body { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at top, #223247 0%, #0d1117 58%); }
+.auth-heading { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto 22px; color: #e6edf3; }
+.auth-heading .brand-icon { width: 44px; height: 44px; display: grid; place-items: center; background: #1d252e; border: 1px solid #39434f; color: #facc15; font-size: 22px; }
+.auth-heading strong, .auth-heading span { display: block; letter-spacing: 1.5px; }
+.auth-heading span { margin-top: 4px; color: #697482; font-size: 9px; }
+.auth-card { max-width: 420px; width: 100%; margin: 0 auto; background: #141a21; border: 1px solid #303945; border-radius: 8px; color: #e6edf3; }
+.auth-card h1 { margin-bottom: 8px; }
+.auth-intro { margin: 0 0 20px; color: #aeb7c1; font-size: 13px; }
+.auth-card form p { margin: 0 0 14px; }
+.auth-card form label { display: block; margin-bottom: 6px; color: #aeb7c1; text-align: left; font-size: 12px; }
+.auth-card form input { border-radius: 5px; }
+.auth-card form button { margin-top: 8px; }
+.auth-error { margin: 0 0 16px; color: #f87171; font-size: 13px; }
+.auth-card .message a { color: #d5dce3; text-decoration: underline; }
+
+/* Public issue reporting */
+.report-form { padding: 22px 24px 26px; }
+.report-field { max-width: 780px; margin-bottom: 18px; }
+.report-field label { display: block; margin-bottom: 7px; color: #cbd3db; font-size: 12px; font-weight: 700; }
+.report-field label span { color: #facc15; }
+.report-field input,
+.report-field select,
+.report-field textarea { width: 100%; min-height: 42px; padding: 10px 12px; background: #11171e; border: 1px solid #303945; border-radius: 4px; color: #e6edf3; font: inherit; }
+.report-field textarea { min-height: 125px; resize: vertical; }
+.report-field input:focus,
+.report-field select:focus,
+.report-field textarea:focus { outline: 2px solid #8b7620; outline-offset: 1px; }
+.field-help { display: block; margin-top: 5px; color: #778390; font-size: 11px; }
+.field-message, .form-errors { display: block; margin-top: 6px; color: #f87171; font-size: 12px; }
+.report-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 22px; }
+.report-actions .create-button { display: inline-block; text-decoration: none; }
+.report-success-panel { max-width: 720px; padding: 30px; }
+.report-success-panel h2 { margin: 8px 0 18px; font-family: "Courier New", monospace; font-size: 28px; color: #facc15; }
+.report-success-panel p { margin: 0 0 12px; color: #aeb7c1; }
+.success-mark { width: 44px; height: 44px; display: grid; place-items: center; margin-bottom: 20px; border: 1px solid #27543b; background: #162a20; color: #4ade80; font-size: 24px; }
+.auth-report-link { display: inline-block; margin-top: 15px; padding: 10px 14px; border: 1px solid #39434e; color: #e6edf3; font-size: 11px; font-weight: 700; letter-spacing: .8px; text-decoration: none; }
+.auth-report-link:hover { background: #252d36; }
+
+/* Mobile navigation and form layout */
+@media (max-width: 650px) {
+  .app { display: block; }
+  .sidebar { display: block; width: 100%; min-height: auto; padding: 8px; border-right: 0; border-bottom: 1px solid #252c35; }
+  .sidebar .brand, .sidebar .system-status { display: none; }
+  .navigation { display: flex; align-items: center; gap: 4px; overflow-x: auto; }
+  .navigation .nav-section { display: none; }
+  .navigation .nav-item { flex: 0 0 auto; margin: 0; padding: 10px; border-left: 0; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .navigation .nav-item.active { border-left-color: transparent; border-bottom-color: #facc15; }
+  .main { padding: 18px 14px; }
+  .report-panel .panel-header { align-items: flex-start; gap: 8px; flex-direction: column; }
+  .report-form { padding: 18px 14px; }
+  .report-success-panel { padding: 20px; }
+}

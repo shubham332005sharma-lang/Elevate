@@ -1,3 +1,0 @@
-{% extends "incidents/base.html" %}
-{% block title %}Report an issue | Elevate{% endblock %}
-{% block content %}<section class="card"><h1>Report an elevator issue</h1>{% if not form.fields.elevator.queryset.exists %}<p>No elevators have been added yet. Please contact the building administrator.</p>{% else %}<form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit">Submit report</button></form>{% endif %}</section>{% endblock %}

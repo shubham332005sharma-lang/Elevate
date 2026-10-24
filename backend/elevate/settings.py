@@ -1,9 +1,11 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-project-elevate-development-only"
 DEBUG = True
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get("ELEVATE_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
+DEVICE_API_TOKEN = os.environ.get("ELEVATE_DEVICE_API_TOKEN", "")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -54,8 +56,8 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "login"
-LOGIN_REDIRECT_URL = "incident-list"
+LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "home"

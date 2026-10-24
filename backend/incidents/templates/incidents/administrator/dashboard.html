@@ -1,0 +1,248 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dashboard | Elevate</title>
+
+    <link
+      rel="stylesheet"
+      href="{% static 'incidents/style.css' %}"
+    />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- ================= SIDEBAR ================= -->
+
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">⇅</div>
+
+          <div>
+            <div class="brand-title">ELEVATOR</div>
+            <div class="brand-subtitle">CONTROL SYSTEM</div>
+          </div>
+        </div>
+
+        <nav class="navigation">
+          <div class="nav-section">MONITORING</div>
+
+          <a href="{% url 'dashboard' %}" class="nav-item active">
+            <span class="nav-icon">▦</span>
+            Dashboard
+          </a>
+
+          <a href="{% url 'elevator-list' %}" class="nav-item">
+            <span class="nav-icon">⇅</span>
+            Elevators
+          </a>
+
+          <a href="{% url 'incident-list' %}" class="nav-item">
+            <span class="nav-icon">⚠</span>
+            Incidents
+            <span class="nav-badge">{{ active_incident_count }}</span>
+          </a>
+
+          <div class="nav-section">OPERATIONS</div>
+          <a href="{% url 'report-incident' %}" class="nav-item">
+            <span class="nav-icon">＋</span>
+            Report an issue
+          </a>
+          {% if request.user.is_staff or request.user.is_superuser %}<div class="nav-section">ADMINISTRATION</div>
+          <a href="{% url 'admin:auth_user_changelist' %}" class="nav-item">
+            <span class="nav-icon">♙</span>
+            Users
+          </a>
+
+          <a href="{% url 'admin:index' %}" class="nav-item">
+            <span class="nav-icon">⚙</span>
+            Admin site
+          </a>
+          {% endif %}
+        </nav>
+
+        <div class="system-status">
+          <span class="status-dot"></span>
+
+          <div>
+            <strong>System Online</strong>
+            <small>Incident tracking available</small>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ================= MAIN ================= -->
+
+      <main class="main">
+        <!-- HEADER -->
+
+        <header class="header">
+          <div>
+            <div class="breadcrumb">ELEVATOR SYSTEM / OVERVIEW</div>
+
+            <h1>System Dashboard</h1>
+
+            <p>Elevator inventory and incident management overview</p>
+          </div>
+
+          <div class="header-right">
+            <div class="system-time">
+              <span class="live-dot"></span>
+              DATABASE
+            </div>
+
+            <div class="user">
+              <div class="avatar">{{ request.user.username|first|upper }}</div>
+
+              <div>
+                <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>
+                <small>{% if request.user.is_superuser %}Administrator{% elif request.user.is_staff %}Staff{% else %}Technician{% endif %}</small>
+              </div>
+            </div>
+            <a class="action-button" href="{% url 'password-change' %}">CHANGE PASSWORD</a>
+            <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="action-button" type="submit">LOG OUT</button></form>
+          </div>
+        </header>
+
+        <!-- ================= STATISTICS ================= -->
+
+        <section class="stats">
+          <div class="stat-card">
+            <div class="stat-icon elevator-icon">⇅</div>
+
+            <div>
+              <span class="stat-label"> TOTAL ELEVATORS </span>
+
+              <strong class="stat-value">{{ total_elevators }}</strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon normal-icon">✓</div>
+
+            <div>
+              <span class="stat-label"> OPERATIONAL </span>
+
+              <strong class="stat-value green">{{ operational_elevators }}</strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon warning-icon">!</div>
+
+            <div>
+              <span class="stat-label"> WARNINGS </span>
+
+              <strong class="stat-value yellow">{{ warning_incidents }}</strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon failure-icon">✕</div>
+
+            <div>
+              <span class="stat-label"> CRITICAL INCIDENTS </span>
+
+              <strong class="stat-value red">{{ critical_incidents }}</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ELEVATOR MONITOR ================= -->
+
+        <section class="panel elevator-panel">
+          <div class="panel-header">
+            <div>
+              <span class="panel-label"> LIVE MONITOR </span>
+
+              <h2>Elevator Status</h2>
+            </div>
+
+            <a class="view-button" href="{% url 'elevator-list' %}">VIEW ALL ELEVATORS →</a>
+          </div>
+
+          <div class="elevator-grid">
+            {% for elevator in elevators %}
+            <article class="elevator-card{% if not elevator.is_operational %} failure-card{% endif %}">
+              <div class="elevator-card-header">
+                <strong>{{ elevator.code }}</strong>
+                <span class="status {% if elevator.is_operational %}normal{% else %}failure{% endif %}">
+                  ● {% if elevator.is_operational %}OPERATIONAL{% else %}OUT OF SERVICE{% endif %}
+                </span>
+              </div>
+              <div class="lift-display{% if not elevator.is_operational %} failure-display{% endif %}">
+                <div class="floor-number">—</div><div class="direction">⇅</div>
+              </div>
+              <div class="lift-info">
+                <div><span>BUILDING</span><strong>{{ elevator.building|default:"Not set" }}</strong></div>
+                <div><span>LOCATION</span><strong>{{ elevator.location|default:"Not set" }}</strong></div>
+                <div><span>INCIDENTS</span><strong>{{ elevator.incidents.count }}</strong></div>
+              </div>
+            </article>
+            {% empty %}
+            <p class="empty-state">No elevators are registered yet. Add one through <a href="{% url 'admin:incidents_elevator_add' %}">Django admin</a>.</p>
+            {% endfor %}
+          </div>
+        </section>
+
+        <!-- ================= LOWER GRID ================= -->
+
+        <div class="content-grid">
+          <!-- INCIDENTS -->
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-label"> SYSTEM EVENTS </span>
+
+                <h2>Recent Incidents</h2>
+              </div>
+
+              <a class="view-button" href="{% url 'incident-list' %}">VIEW ALL →</a>
+            </div>
+
+            <div class="incident-list">
+              {% for incident in recent_incidents %}
+              <a class="incident" href="{% url 'incident-detail' incident.pk %}">
+                <div class="incident-severity {{ incident.severity }}">{% if incident.severity == "low" %}·{% else %}!{% endif %}</div>
+                <div class="incident-details">
+                  <strong>{{ incident.title }}</strong>
+                  <span>Elevator {{ incident.elevator.code }} · {{ incident.get_severity_display }}</span>
+                  <small>{{ incident.created_at|timesince }} ago</small>
+                </div>
+                <span class="incident-status {{ incident.status }}">{{ incident.get_status_display|upper }}</span>
+              </a>
+              {% empty %}
+              <p class="empty-state">No incidents have been reported.</p>
+              {% endfor %}
+            </div>
+          </section>
+
+          <!-- QUICK ACTIONS -->
+
+          <section class="panel">
+            <div class="panel-header">
+              <div><span class="panel-label">OPERATIONS</span><h2>Quick actions</h2></div>
+            </div>
+            <div class="maintenance-list">
+              <a class="maintenance" href="{% url 'report-incident' %}"><div class="maintenance-date">＋</div><div><strong>Report an issue</strong><span>Submit an elevator incident</span></div></a>
+              <a class="maintenance" href="{% url 'incident-list' %}"><div class="maintenance-date">⚠</div><div><strong>Review incidents</strong><span>Update status and assignments</span></div></a>
+              <a class="maintenance" href="{% url 'elevator-list' %}"><div class="maintenance-date">⇅</div><div><strong>View elevators</strong><span>Browse registered equipment</span></div></a>
+            </div>
+          </section>
+        </div>
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+          <span> Elevator Management System </span>
+
+          <span>Database summary · refreshed on page load</span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

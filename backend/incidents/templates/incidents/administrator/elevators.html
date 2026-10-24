@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elevators | Elevate</title>
+  <link rel="stylesheet" href="{% static 'incidents/style.css' %}">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon">⇅</div><div><div class="brand-title">ELEVATOR</div><div class="brand-subtitle">CONTROL SYSTEM</div></div></div>
+      <nav class="navigation">
+        <div class="nav-section">MONITORING</div>
+        <a href="{% url 'dashboard' %}" class="nav-item"><span class="nav-icon">▦</span>Dashboard</a>
+        <a href="{% url 'elevator-list' %}" class="nav-item active"><span class="nav-icon">⇅</span>Elevators</a>
+        <a href="{% url 'incident-list' %}" class="nav-item"><span class="nav-icon">⚠</span>Incidents</a>
+        <a href="{% url 'report-incident' %}" class="nav-item"><span class="nav-icon">＋</span>Report an issue</a>
+        {% if request.user.is_staff or request.user.is_superuser %}<div class="nav-section">ADMINISTRATION</div>
+        <a href="{% url 'admin:index' %}" class="nav-item"><span class="nav-icon">⚙</span>Administration</a>{% endif %}
+      </nav>
+      <div class="system-status"><span class="status-dot"></span><div><strong>System Online</strong><small>Incident tracking available</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="header">
+        <div><div class="breadcrumb">ELEVATOR SYSTEM / EQUIPMENT</div><h1>Elevators</h1><p>Registered elevators and their current service status</p></div>
+        <div class="header-right">{% if request.user.is_staff or request.user.is_superuser %}<a class="create-button" href="{% url 'admin:incidents_elevator_add' %}">+ ADD ELEVATOR</a>{% endif %}<div class="user"><div class="avatar">{{ request.user.username|first|upper }}</div><div><strong>{{ request.user.get_full_name|default:request.user.username }}</strong><small>Equipment overview</small></div></div><a class="action-button" href="{% url 'password-change' %}">CHANGE PASSWORD</a><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="action-button" type="submit">LOG OUT</button></form></div>
+      </header>
+      <section class="panel">
+        <div class="panel-header"><div><span class="panel-label">EQUIPMENT REGISTER</span><h2>Registered Elevators</h2></div><div class="record-count">{{ elevators|length }} elevator{{ elevators|length|pluralize }}</div></div>
+        <div class="table-wrapper"><table>
+          <thead><tr><th>CODE</th><th>BUILDING</th><th>LOCATION</th><th>INCIDENTS</th><th>STATUS</th>{% if request.user.is_staff or request.user.is_superuser %}<th>ADMIN</th>{% endif %}</tr></thead>
+          <tbody>
+            {% for elevator in elevators %}
+            <tr>
+              <td><span class="elevator-tag">{{ elevator.code }}</span></td>
+              <td>{{ elevator.building|default:"—" }}</td>
+              <td>{{ elevator.location|default:"—" }}</td>
+              <td>{{ elevator.incidents.count }}</td>
+              <td><span class="status {% if elevator.is_operational %}resolved{% else %}open{% endif %}">{% if elevator.is_operational %}OPERATIONAL{% else %}OUT OF SERVICE{% endif %}</span></td>
+              {% if request.user.is_staff or request.user.is_superuser %}<td><a class="action-button" href="{% url 'admin:incidents_elevator_change' elevator.pk %}">EDIT</a></td>{% endif %}
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No elevators are registered. Add an elevator to enable public incident reporting.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table></div>
+      </section>
+      <footer><span>Elevator Management System</span><span>Data from the Elevate database</span></footer>
+    </main>
+  </div>
+</body>
+</html>

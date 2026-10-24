@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Report received | Elevate</title>
+  <link rel="stylesheet" href="{% static 'incidents/style.css' %}">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon">⇅</div><div><div class="brand-title">ELEVATOR</div><div class="brand-subtitle">CONTROL SYSTEM</div></div></div>
+      <nav class="navigation">
+        <div class="nav-section">PUBLIC SERVICES</div>
+        <a href="{% url 'report-incident' %}" class="nav-item active"><span class="nav-icon">＋</span>Report an issue</a>
+        {% if request.user.is_authenticated %}<a href="{% url 'dashboard' %}" class="nav-item"><span class="nav-icon">▦</span>Dashboard</a>{% else %}<a href="{% url 'login' %}" class="nav-item"><span class="nav-icon">♙</span>Staff login</a>{% endif %}
+      </nav>
+      <div class="system-status"><span class="status-dot"></span><div><strong>Report recorded</strong><small>Reference saved to the system</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="header"><div><div class="breadcrumb">ELEVATE / REPORTING</div><h1>Thank you, your report was received</h1><p>The building team can now review the issue.</p></div></header>
+      <section class="panel report-success-panel">
+        <div class="success-mark">✓</div>
+        <span class="panel-label">REPORT REFERENCE</span>
+        <h2>INC-{{ incident.pk|stringformat:"04d" }}</h2>
+        <p><strong>{{ incident.title }}</strong></p>
+        <p>Elevator {{ incident.elevator.code }} · Submitted {{ incident.created_at|date:"M j, Y H:i" }}</p>
+        <div class="report-actions"><a class="create-button" href="{% url 'report-incident' %}">REPORT ANOTHER ISSUE</a><a class="action-button" href="{% url 'login' %}">STAFF LOGIN</a></div>
+      </section>
+      <footer><span>Elevator Management System</span><span>Keep reference INC-{{ incident.pk|stringformat:"04d" }} for follow-up</span></footer>
+    </main>
+  </div>
+</body>
+</html>

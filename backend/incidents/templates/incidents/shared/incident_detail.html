@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Incident {{ incident.pk }} | Elevate</title>
+  <link rel="stylesheet" href="{% static 'incidents/style.css' %}">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon">⇅</div><div><div class="brand-title">ELEVATOR</div><div class="brand-subtitle">CONTROL SYSTEM</div></div></div>
+      <nav class="navigation">
+        <div class="nav-section">MONITORING</div>
+        <a href="{% url 'dashboard' %}" class="nav-item"><span class="nav-icon">▦</span>{% if technician %}My tasks{% else %}Dashboard{% endif %}</a>
+        {% if not technician %}<a href="{% url 'elevator-list' %}" class="nav-item"><span class="nav-icon">⇅</span>Elevators</a>
+        <a href="{% url 'incident-list' %}" class="nav-item active"><span class="nav-icon">⚠</span>Incidents</a>{% endif %}
+        {% if not technician %}<a href="{% url 'report-incident' %}" class="nav-item"><span class="nav-icon">＋</span>Report an issue</a>{% endif %}
+        {% if request.user.is_staff or request.user.is_superuser %}<div class="nav-section">ADMINISTRATION</div>
+        <a href="{% url 'admin:index' %}" class="nav-item"><span class="nav-icon">⚙</span>Administration</a>{% endif %}
+      </nav>
+      <div class="system-status"><span class="status-dot"></span><div><strong>System Online</strong><small>Incident tracking available</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="header">
+        <div><div class="breadcrumb">{% if technician %}MY TASKS{% else %}INCIDENT REGISTER{% endif %} / INC-{{ incident.pk|stringformat:"04d" }}</div><h1>{{ incident.title }}</h1><p>{{ incident.elevator.code }} · {{ incident.created_at|date:"M j, Y H:i" }}</p></div>
+        <div class="header-right"><a class="action-button" href="{% if technician %}{% url 'dashboard' %}{% else %}{% url 'incident-list' %}{% endif %}">{% if technician %}← MY TASKS{% else %}← ALL INCIDENTS{% endif %}</a><div class="user"><div class="avatar">{{ request.user.username|first|upper }}</div><div><strong>{{ request.user.get_full_name|default:request.user.username }}</strong><small>{% if technician %}Technician{% else %}Incident management{% endif %}</small></div></div><a class="action-button" href="{% url 'password-change' %}">CHANGE PASSWORD</a><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="action-button" type="submit">LOG OUT</button></form></div>
+      </header>
+      {% if messages %}{% for message in messages %}<p class="messages">{{ message }}</p>{% endfor %}{% endif %}
+      <div class="content-grid">
+        <section class="panel">
+          <div class="panel-header"><div><span class="panel-label">REPORT DETAILS</span><h2>{{ incident.category|default:"Elevator issue" }}</h2></div><span class="severity {{ incident.severity }}">{{ incident.get_severity_display|upper }}</span></div>
+          <div class="incident-details-panel">
+            <p><strong>Elevator:</strong> {{ incident.elevator.code }}{% if incident.elevator.building %} · {{ incident.elevator.building }}{% endif %}</p>
+            <p><strong>Location:</strong> {{ incident.elevator.location|default:"Not provided" }}</p>
+            {% if not technician %}<p><strong>Reported by:</strong> {{ incident.reporter_name }}{% if incident.reporter_contact %} · {{ incident.reporter_contact }}{% endif %}</p>{% endif %}
+            <p><strong>Description</strong></p>
+            <div>{{ incident.description|linebreaks }}</div>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-header"><div><span class="panel-label">WORKFLOW</span><h2>{% if technician %}Update task status{% else %}Update incident{% endif %}</h2></div></div>
+          <form class="incident-update-form" method="post">{% csrf_token %}{{ form.as_p }}<button class="create-button" type="submit">{% if technician %}SAVE STATUS{% else %}SAVE CHANGES{% endif %}</button></form>
+        </section>
+      </div>
+      <footer><span>Elevator Management System</span><span>Last updated {{ incident.updated_at|date:"M j, Y H:i" }}</span></footer>
+    </main>
+  </div>
+</body>
+</html>

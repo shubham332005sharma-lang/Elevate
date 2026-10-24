@@ -1,6 +1,8 @@
 __pycache__/
 *.py[cod]
 *.sqlite3
+.elevate-server.pid
+elevate-server*.log
 .env
 .venv/
 venv/
